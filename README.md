@@ -3,7 +3,7 @@
 
 Group Members:
 - [Cheng Wee Hoe](https://github.com/chengwee)
-- [Arissa Arissa Rashid](https://github.com/radjsh)
+- [Arissa Rashid](https://github.com/radjsh)
 - [Hoo Yong Wei, Gerald](https://github.com/geraldhyw)
 - [Anirudh Shrinivason](https://github.com/Anirudh181001)
 - [Jia Shuyi](https://github.com/shuyijia)
