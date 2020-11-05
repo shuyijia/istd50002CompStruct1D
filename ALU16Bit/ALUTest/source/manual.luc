@@ -62,6 +62,14 @@ module manual (
         alu.b = bin.q;
         alu.alufn = io_dip[0][5:0];
         result = alu.alu;
+        if (alu.z == 1){
+          ledarray1 = 8b10000100;
+        }
+        if (io_dip[0][5:0] == 6b000011){
+          if (bin.q == 16b0){
+            ledarray1 = 8b01000100;
+          }
+        }
         //io_led[1] = alu.alu[7:0];
         //io_led[2] = alu.alu[15:8];
      }
