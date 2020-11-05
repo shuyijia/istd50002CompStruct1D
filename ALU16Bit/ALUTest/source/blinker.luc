@@ -1,0 +1,14 @@
+module blinker (
+    input clk,    // clock
+    input rst,    // reset
+    output blink // output to LED
+
+  ) {
+ 
+  dff counter[27](.clk(clk), .rst(rst)); // dff counter used to intervalize output; Incremented at every cycle 
+ 
+  always {
+    blink = counter.q[26];  // blink is set to the MSB of counter.q 
+    counter.d = counter.q + 1;  // Increment counter.d to counter.q + 1
+  }
+}

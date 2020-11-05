@@ -1,0 +1,23 @@
+module comparator (
+  input alufn[6],    // 6bit ALUFN input signal
+  input a[16],         // 16bit input signal a
+  input b[16],         // 16bit input signal b
+  output op[16]      // 16bit output signal op
+) {
+
+  always {   //ALUFN 1100XX
+    case(alufn[1:0]){  
+      2b01:          // ALUFN 01 (A == B)
+        op = $signed(a) == $signed(b);
+        
+      2b10:          // ALUFN 10 (A < B)
+        op = $signed(a) < $signed(b);
+        
+      2b11:          // ALUFN 11 (A <= B)
+        op = $signed(a) <= $signed(b);
+        
+      default:       // When there is no input
+        op = 16b0;
+    }
+  }
+}
