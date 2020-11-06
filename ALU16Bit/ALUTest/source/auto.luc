@@ -6,7 +6,42 @@ module auto (
     input io_button [5],    // 5 buttons on IO Shield
     input io_dip [3][8]     // DIP switches on IO Shield
   ) {
+  /* The different test signals:
+    1.1  A = 0000000000000111 ,B = 0000000000000001, ALUFN = 000000, Function: ADD, Expected Outcome: 0000000000001000. -> Correct
+    1.2  A = 0000000000001000, B = 0000000000000001, ALUFN = 000000, Function: ADD, Expected Outcome: 0000000000001000. -> Gives error
+    
+    2.1  A = 0000000000000111 ,B = 0000000000000001, ALUFN = 000001, Function: SUB, Expected Outcome: 000000000000110. -> Correct
+    2.2  A = 0000000000001000, B = 0000000000000001, ALUFN = 000001, Function: ADD, Expected Outcome: 000000000000110. -> Gives error
+    
+    3.1  A = 0000000000000111 ,B = 0000000000000010, ALUFN = 000010, Function: MUL, Expected Outcome: 0000000000010000 -> Correct
+    3.2  A = 0000000000001000, B = 0000000000000010, ALUFN = 000010, Function: MUL, Expected Outcome: 0000000000010000. -> Gives error
+    
+    4.1  A = 0000000000001100 ,B = 0000000000000011, ALUFN = 0000011, Function: DIV, Expected Outcome: 0000000000001000. -> Correct
+    4.2  A = 0000000000001000, B = 0000000000000100, ALUFN = 0000011, Function: DIV, Expected Outcome: 0000000000001000. -> Gives error
   
+    5.1  A = 0000000000000101 ,B = 0000000000001111, ALUFN = 011000, Function: AND, Expected Outcome: 0000000000000101. -> Correct
+    5.2  A = 0000000000000110, B = 0000000000001111, ALUFN = 011000, Function: AND, Expected Outcome: 0000000000000101. -> Gives error
+    
+    6.1  A = 0000000000000101 ,B = 0000000000001010, ALUFN = 011110, Function: OR, Expected Outcome: 0000000000001111. -> Correct
+    6.2  A = 0000000000000110, B = 0000000000001010, ALUFN = 011110, Function: OR, Expected Outcome: 0000000000001111. -> Gives error
+    
+    7.1  A = 0000000000000101 ,B = 0000000000001111, ALUFN = 010110, Function: XOR, Expected Outcome: 0000000000001110. -> Correct
+    7.2  A = 0000000000000110, B = 0000000000001111, ALUFN = 010110, Function: XOR, Expected Outcome: 0000000000001110. -> Gives error
+
+    8.1  A = 0000000000000101 ,B = 0000000000001111, ALUFN = 011010, Function: A, Expected Outcome: 0000000000000101. -> Correct
+    8.2  A = 0000000000001000, B = 0000000000001111, ALUFN = 010110, Function: A, Expected Outcome: 0000000000000101. -> Gives error
+    
+    9.1  A = 1111111111110000 ,B = 0000000000000001, ALUFN = 011111, Function: INVA, Expected Outcome: 0000000000001111. -> Correct
+    9.2  A = 1111111111110001, B = 0000000000000001, ALUFN = 011111, Function: INVA, Expected Outcome: 0000000000001111. -> Gives error
+    
+    10.1  A = 1111111111110000 ,B = 0000000000000001, ALUFN = 100000 Function: SHL, Expected Outcome: 1111111111100000. -> Correct
+    10.2  A = 1111111111110001, B = 0000000000000001, ALUFN = 100000, Function: SHL, Expected Outcome:1111111111110010. -> Gives error
+    
+    1110000000000000
+    
+    
+    
+    
   // IMPORTS
   alu alu;
   
