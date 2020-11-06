@@ -37,8 +37,11 @@ module auto (
     10.1  A = 1111111111110000 ,B = 0000000000000001, ALUFN = 100000 Function: SHL, Expected Outcome: 1111111111100000. -> Correct
     10.2  A = 1111111111110001, B = 0000000000000001, ALUFN = 100000, Function: SHL, Expected Outcome:1111111111110010. -> Gives error
     
-    1110000000000000
+    11.1  A = 1111111111110000 ,B = 0000000000001000, ALUFN = 100001 Function: SHR, Expected Outcome: 000000001111111. -> Correct
+    11.2  A = 1110000000000000, B = 0000000000001001, ALUFN = 100001, Function: SHR, Expected Outcome:000000001111111. -> Gives error
     
+    
+    */
     
     
     
