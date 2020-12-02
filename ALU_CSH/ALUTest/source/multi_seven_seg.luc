@@ -1,0 +1,41 @@
+module multi_seven_seg (
+    input clk,  // clock
+    input rst,  // reset
+    input score[8], // current game score
+    output seg[2][8]
+  ) {
+    .clk(clk){
+  
+    // define dffs needed
+    
+    .rst(rst){
+
+    }
+  }
+  
+  alu mod;
+  alu div;
+  
+  seven_seg seven_seg0;
+  seven_seg seven_seg1;
+
+  always {
+  
+    // ten's place
+    mod.a = score;
+    mod.b = 10;
+    mod.alufn = 6b000100;
+    seven_seg0.char = mod.alu[3:0];
+    
+    // one's place
+    div.a = score;
+    div.b = 10;
+    div.alufn = 6b000011;
+    seven_seg1.char = div.alu[3:0];
+    
+    // set output
+    seg[0] = seven_seg0.seg;
+    seg[1] = seven_seg1.seg;
+    
+  }
+}

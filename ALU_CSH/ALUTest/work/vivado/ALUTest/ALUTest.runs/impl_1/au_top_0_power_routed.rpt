@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.1.1 (win64) Build 2960000 Wed Aug  5 22:57:20 MDT 2020
-| Date             : Wed Dec  2 18:27:11 2020
+| Date             : Thu Dec  3 00:37:32 2020
 | Host             : LAPTOP-D1KU5EN8 running 64-bit major release  (build 9200)
 | Command          : report_power -file au_top_0_power_routed.rpt -pb au_top_0_power_summary_routed.pb -rpx au_top_0_power_routed.rpx
 | Design           : au_top_0
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.121        |
+| Total On-Chip Power (W)  | 0.120        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.050        |
+| Dynamic (W)              | 0.048        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 4.9          |
 | Max Ambient (C)          | 84.4         |
@@ -53,16 +53,16 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.002 |        3 |       --- |             --- |
-| Slice Logic    |     0.001 |      731 |       --- |             --- |
-|   LUT as Logic |    <0.001 |      230 |     20800 |            1.11 |
-|   Register     |    <0.001 |      370 |     41600 |            0.89 |
-|   CARRY4       |    <0.001 |       43 |      8150 |            0.53 |
-|   Others       |     0.000 |       31 |       --- |             --- |
-| Signals        |     0.002 |      574 |       --- |             --- |
-| DSPs           |     0.000 |        2 |        90 |            2.22 |
-| I/O            |     0.044 |       78 |       170 |           45.88 |
+| Slice Logic    |     0.001 |      967 |       --- |             --- |
+|   LUT as Logic |     0.001 |      358 |     20800 |            1.72 |
+|   Register     |    <0.001 |      394 |     41600 |            0.95 |
+|   CARRY4       |    <0.001 |       83 |      8150 |            1.02 |
+|   Others       |     0.000 |       47 |       --- |             --- |
+| Signals        |     0.002 |      751 |       --- |             --- |
+| DSPs           |    <0.001 |        3 |        90 |            3.33 |
+| I/O            |     0.043 |       79 |       170 |           46.47 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.121 |          |           |                 |
+| Total          |     0.120 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -141,7 +141,7 @@ Table of Contents
 +---------------------+-----------+
 | Name                | Power (W) |
 +---------------------+-----------+
-| au_top_0            |     0.050 |
+| au_top_0            |     0.048 |
 |   game              |     0.005 |
 |     random_position |     0.003 |
 |       random        |     0.002 |

@@ -4,6 +4,7 @@ module au_top (
     output led [8],         // 8 user controllable LEDs
     input button,    
     input start,
+    input godmode,
     output red[16],         // LEDs on IO Shield
     output blue[16],
     output green[16],
@@ -22,12 +23,10 @@ module au_top (
     
     .rst(rst) {
       game game;
+      multi_seven_seg multi_seven_seg;
     }
     
   }
-  
-  seven_seg seven_seg0;
-  seven_seg seven_seg1;
    
   always { 
     reset_cond.in = ~rst_n;    // input raw inverted reset signal
@@ -38,15 +37,15 @@ module au_top (
     
     game.button = button;
     game.start = start;
+    game.godbtn =  godmode;
     
     red = game.red;
     blue = game.blue;
     green = game.green;
     
-    // add alu and put into new module for multi 7seg
-    seven_seg0.char = (game.score) - ((game.score) / 10) * 10;
-    seven_seg1.char = (game.score)/10;
-    seg[0] = seven_seg0.seg;
-    seg[1] = seven_seg1.seg;
+    // calculate score and display to 7-seg
+    multi_seven_seg.score = game.score;
+    seg = multi_seven_seg.seg;
+
   }
 }

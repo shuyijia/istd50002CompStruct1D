@@ -4,6 +4,7 @@ module seven_seg (
   ) {
  
   always {
+  // set values into the seven segment
     case (char) {
       0: seg = 7b0111111;
       1: seg = 7b0000110;

@@ -9,6 +9,7 @@ module game_2 (
     input rst,
     input button,
     input start,
+    input godbtn,
     output reg [15:0] red,
     output reg [15:0] green,
     output reg [15:0] blue,
@@ -24,6 +25,7 @@ module game_2 (
   reg [7:0] M_scoremem_d, M_scoremem_q = 1'h0;
   reg M_button_dpress_d, M_button_dpress_q = 1'h0;
   reg M_button_start_d, M_button_start_q = 1'h0;
+  reg M_button_god_d, M_button_god_q = 1'h0;
   reg [47:0] M_count_d, M_count_q = 1'h0;
   reg M_direction_d, M_direction_q = 1'h0;
   reg [31:0] M_speed_d, M_speed_q = 1'h0;
@@ -66,6 +68,20 @@ module game_2 (
     .in(M_start_debounce_in),
     .out(M_start_debounce_out)
   );
+  wire [1-1:0] M_god_condi_out;
+  reg [1-1:0] M_god_condi_in;
+  button_conditioner_5 god_condi (
+    .clk(clk),
+    .in(M_god_condi_in),
+    .out(M_god_condi_out)
+  );
+  wire [1-1:0] M_god_debounce_out;
+  reg [1-1:0] M_god_debounce_in;
+  button_debounce_6 god_debounce (
+    .clk(clk),
+    .in(M_god_debounce_in),
+    .out(M_god_debounce_out)
+  );
   localparam INIT_gamestate = 3'd0;
   localparam CSHL_gamestate = 3'd1;
   localparam CSHR_gamestate = 3'd2;
@@ -101,6 +117,7 @@ module game_2 (
     M_blueposindex_d = M_blueposindex_q;
     M_count_d = M_count_q;
     M_greenpos_d = M_greenpos_q;
+    M_button_god_d = M_button_god_q;
     M_button_dpress_d = M_button_dpress_q;
     M_speed_d = M_speed_q;
     M_godmode_d = M_godmode_q;
@@ -124,6 +141,11 @@ module game_2 (
     if (M_start_debounce_out == 1'h1) begin
       M_button_start_d = 1'h1;
     end
+    M_god_condi_in = godbtn;
+    M_god_debounce_in = M_god_condi_out;
+    if (M_god_debounce_out == 1'h1) begin
+      M_button_god_d = 1'h1;
+    end
     if (M_gamestate_q != INIT_gamestate) begin
       if (M_greenpos_q == M_bluepos_q) begin
         M_gamestate_d = SCORING_gamestate;
@@ -145,10 +167,8 @@ module game_2 (
         M_greenpos_d = 16'h0800;
         M_bluepos_d = 16'h0080;
         M_blueposindex_d = 3'h7;
-        M_godmode_d = 1'h0;
-        if (M_button_dpress_q == 1'h1 && M_button_start_q == 1'h1) begin
-          M_button_dpress_d = 1'h0;
-          M_button_start_d = 1'h0;
+        if (M_button_god_q == 1'h1) begin
+          M_button_god_d = 1'h0;
           M_godmode_d = 1'h1;
         end
         if (M_button_start_q == 1'h1) begin
@@ -162,7 +182,10 @@ module game_2 (
         M_count_d = M_count_q + 4'h8 + M_speed_q;
         M_direction_d = 1'h0;
         if (M_count_q[29+0-:1] == 1'h1) begin
-          M_bluepos_d[0+15-:16] = M_bluepos_q << 1'h1;
+          M_alu_a = M_bluepos_q;
+          M_alu_b = 16'h0001;
+          M_alu_alufn = 17'h186a0;
+          M_bluepos_d = M_alu_alu;
           M_blueposindex_d = M_blueposindex_q + 1'h1;
           M_count_d = 1'h0;
         end
@@ -176,6 +199,7 @@ module game_2 (
         end
         if (M_button_start_q == 1'h1) begin
           M_button_start_d = 1'h0;
+          M_godmode_d = 1'h0;
           M_gamestate_d = INIT_gamestate;
         end
       end
@@ -183,7 +207,10 @@ module game_2 (
         M_count_d = M_count_q + 4'h8 + M_speed_q;
         M_direction_d = 1'h1;
         if (M_count_q[29+0-:1] == 1'h1) begin
-          M_bluepos_d[0+15-:16] = M_bluepos_q >> 1'h1;
+          M_alu_a = M_bluepos_q;
+          M_alu_b = 16'h0001;
+          M_alu_alufn = 17'h186a1;
+          M_bluepos_d = M_alu_alu;
           M_blueposindex_d = M_blueposindex_q - 1'h1;
           M_count_d = 1'h0;
         end
@@ -197,6 +224,7 @@ module game_2 (
         end
         if (M_button_start_q == 1'h1) begin
           M_button_start_d = 1'h0;
+          M_godmode_d = 1'h0;
           M_gamestate_d = INIT_gamestate;
         end
       end
@@ -226,6 +254,7 @@ module game_2 (
     M_scoremem_q <= M_scoremem_d;
     M_button_dpress_q <= M_button_dpress_d;
     M_button_start_q <= M_button_start_d;
+    M_button_god_q <= M_button_god_d;
     M_count_q <= M_count_d;
     M_direction_q <= M_direction_d;
     M_speed_q <= M_speed_d;

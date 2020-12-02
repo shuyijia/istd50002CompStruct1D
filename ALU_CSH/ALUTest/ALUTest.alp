@@ -2,6 +2,7 @@
 <project name="ALUTest" board="Alchitry Au" language="Lucid" version="3">
   <files>
     <src>button_debounce.luc</src>
+    <src>multi_seven_seg.luc</src>
     <src>seven_seg.luc</src>
     <src>random_position.luc</src>
     <component>pipeline.luc</component>

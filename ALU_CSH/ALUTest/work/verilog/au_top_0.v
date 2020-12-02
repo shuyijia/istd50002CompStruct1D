@@ -10,6 +10,7 @@ module au_top_0 (
     output reg [7:0] led,
     input button,
     input start,
+    input godmode,
     output reg [15:0] red,
     output reg [15:0] blue,
     output reg [15:0] green,
@@ -35,29 +36,25 @@ module au_top_0 (
   wire [8-1:0] M_game_score;
   reg [1-1:0] M_game_button;
   reg [1-1:0] M_game_start;
+  reg [1-1:0] M_game_godbtn;
   game_2 game (
     .clk(clk),
     .rst(rst),
     .button(M_game_button),
     .start(M_game_start),
+    .godbtn(M_game_godbtn),
     .red(M_game_red),
     .green(M_game_green),
     .blue(M_game_blue),
     .score(M_game_score)
   );
-  
-  wire [8-1:0] M_seven_seg0_seg;
-  reg [4-1:0] M_seven_seg0_char;
-  seven_seg_3 seven_seg0 (
-    .char(M_seven_seg0_char),
-    .seg(M_seven_seg0_seg)
-  );
-  
-  wire [8-1:0] M_seven_seg1_seg;
-  reg [4-1:0] M_seven_seg1_char;
-  seven_seg_3 seven_seg1 (
-    .char(M_seven_seg1_char),
-    .seg(M_seven_seg1_seg)
+  wire [16-1:0] M_multi_seven_seg_seg;
+  reg [8-1:0] M_multi_seven_seg_score;
+  multi_seven_seg_3 multi_seven_seg (
+    .clk(clk),
+    .rst(rst),
+    .score(M_multi_seven_seg_score),
+    .seg(M_multi_seven_seg_seg)
   );
   
   always @* begin
@@ -67,12 +64,11 @@ module au_top_0 (
     usb_tx = usb_rx;
     M_game_button = button;
     M_game_start = start;
+    M_game_godbtn = godmode;
     red = M_game_red;
     blue = M_game_blue;
     green = M_game_green;
-    M_seven_seg0_char = (M_game_score) - ((M_game_score) / 4'ha) * 4'ha;
-    M_seven_seg1_char = (M_game_score) / 4'ha;
-    seg[0+7-:8] = M_seven_seg0_seg;
-    seg[8+7-:8] = M_seven_seg1_seg;
+    M_multi_seven_seg_score = M_game_score;
+    seg = M_multi_seven_seg_seg;
   end
 endmodule

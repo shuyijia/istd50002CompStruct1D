@@ -21,7 +21,7 @@ module random_position_4 (
   wire [32-1:0] M_random_num;
   reg [1-1:0] M_random_next;
   reg [32-1:0] M_random_seed;
-  pn_gen_8 random (
+  pn_gen_9 random (
     .clk(clk),
     .rst(rst),
     .next(M_random_next),

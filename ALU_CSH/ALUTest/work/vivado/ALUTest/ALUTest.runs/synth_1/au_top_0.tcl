@@ -84,19 +84,20 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/adder_10.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/adder_11.v
   D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/alu_7.v
-  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/boolean_12.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/boolean_13.v
   D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/button_conditioner_5.v
   D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/button_debounce_6.v
-  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/comparator_11.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/comparator_12.v
   D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/game_2.v
-  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/pipeline_9.v
-  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/pn_gen_8.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/multi_seven_seg_3.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/pipeline_10.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/pn_gen_9.v
   D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/random_position_4.v
   D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/reset_conditioner_1.v
-  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/seven_seg_3.v
-  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/shifter_13.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/seven_seg_8.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/shifter_14.v
   D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/au_top_0.v
 }
 OPTRACE "Adding files" END { }

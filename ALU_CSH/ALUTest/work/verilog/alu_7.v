@@ -23,7 +23,7 @@ module alu_7 (
   reg [6-1:0] M_adder_alufn;
   reg [16-1:0] M_adder_a;
   reg [16-1:0] M_adder_b;
-  adder_10 adder (
+  adder_11 adder (
     .alufn(M_adder_alufn),
     .a(M_adder_a),
     .b(M_adder_b),
@@ -37,7 +37,7 @@ module alu_7 (
   reg [6-1:0] M_comparator_alufn;
   reg [16-1:0] M_comparator_a;
   reg [16-1:0] M_comparator_b;
-  comparator_11 comparator (
+  comparator_12 comparator (
     .alufn(M_comparator_alufn),
     .a(M_comparator_a),
     .b(M_comparator_b),
@@ -48,7 +48,7 @@ module alu_7 (
   reg [6-1:0] M_boolean_alufn;
   reg [16-1:0] M_boolean_a;
   reg [16-1:0] M_boolean_b;
-  boolean_12 boolean (
+  boolean_13 boolean (
     .alufn(M_boolean_alufn),
     .a(M_boolean_a),
     .b(M_boolean_b),
@@ -59,7 +59,7 @@ module alu_7 (
   reg [6-1:0] M_shifter_alufn;
   reg [16-1:0] M_shifter_a;
   reg [16-1:0] M_shifter_b;
-  shifter_13 shifter (
+  shifter_14 shifter (
     .alufn(M_shifter_alufn),
     .a(M_shifter_a),
     .b(M_shifter_b),

@@ -75,8 +75,7 @@ pin seg[1][6] C45;
 pin seg[1][7] C48;
 
 pin start C8 pulldown;
-
-
+pin godmode D9 pulldown;
 
 // flip the Tx/Rx lines
 pin usb_rx USB_TX;

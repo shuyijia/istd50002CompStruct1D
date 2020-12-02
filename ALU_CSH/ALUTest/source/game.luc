@@ -3,6 +3,7 @@ module game (
     input rst,  // reset
     input button, 
     input start,
+    input godbtn,
     output red[16],
     output green[16],
     output blue[16],
@@ -19,22 +20,30 @@ module game (
     dff scoremem[8];
     dff button_dpress;
     dff button_start;
+    dff button_god;
     dff count[48];
     dff direction;
     dff speed[32];
     dff godmode;
     
-    .rst(rst){
+    .rst(rst){ 
+      // use to generate random positions for red and green pixels
       random_position random_position;
     }
     
+    // initialize direction button (big blue button)
     button_conditioner dpress_condi;
     button_debounce dpress_debounce;
     
+    // initialize start button (small green button)
     button_conditioner start_condi;
     button_debounce start_debounce;
     
-    fsm gamestate = {INIT, CSHL, CSHR, COLLISION, SCORING, DONE};
+    // initialized godmode button (hidden)
+    button_conditioner god_condi;
+    button_debounce god_debounce;
+    
+    fsm gamestate = {INIT, CSHL, CSHR, COLLISION, SCORING, DONE};  
 
   }
   
@@ -70,11 +79,20 @@ module game (
       button_start.d = 1;
     }
     
+    // godmode button
+    god_condi.in = godbtn;
+    god_debounce.in = god_condi.out;
+   
+    if (god_debounce.out == 1) {
+      button_god.d = 1;
+    }
+    
+    // change state to SCORING if green and blue are in the same position
     if (gamestate.q != gamestate.INIT) {
       if (greenpos.q == bluepos.q) {
         gamestate.d = gamestate.SCORING;  
       }
-      
+      // change state to INIT if red and blue are in the same position
       if (redpos.q == bluepos.q && godmode.q == 0) {
         gamestate.d = gamestate.INIT;
       }
@@ -97,11 +115,10 @@ module game (
         greenpos.d = 16h0800;
         bluepos.d = 16h0080; 
         blueposindex.d = 7;
-        godmode.d = 0;
         
-        if (button_dpress.q == 1 && button_start.q == 1) {
-          button_dpress.d = 0;
-          button_start.d = 0;
+        // activate god mode
+        if (button_god.q == 1) {
+          button_god.d = 0;
           godmode.d = 1;
         }
         
@@ -118,7 +135,12 @@ module game (
         direction.d = 0;     
         
         if (count.q[29] == 1){
-          bluepos.d[15:0] = bluepos.q << 1;
+          // shift left
+          alu.a = bluepos.q;
+          alu.b = 16b1;
+          alu.alufn = 100000;
+          bluepos.d = alu.alu;
+          
           blueposindex.d = blueposindex.q + 1;
           count.d = 0;
         }
@@ -129,13 +151,16 @@ module game (
           blueposindex.d = 0;
         }
         
+        // change state to CSHR if direction button is pressed
         if (button_dpress.q == 1){
           button_dpress.d = 0;
           gamestate.d = gamestate.CSHR;
         }
-        
+        // change state to INIT if start button is pressed
         if (button_start.q == 1) {
           button_start.d = 0;
+          // Deactivate godmode on end
+          godmode.d = 0;
           gamestate.d = gamestate.INIT;
         } 
               
@@ -145,7 +170,12 @@ module game (
         direction.d = 1;
 
         if (count.q[29] == 1){
-          bluepos.d[15:0] = bluepos.q >> 1;
+          // shift right
+          alu.a = bluepos.q;
+          alu.b = 16b1;
+          alu.alufn = 100001;
+          bluepos.d = alu.alu;
+          
           blueposindex.d = blueposindex.q - 1;
           count.d = 0;
         }
@@ -155,20 +185,24 @@ module game (
           bluepos.d = 16h8000;
           blueposindex.d = 15;
         }
-        
+        // change to CSHL if direction button is pressed
         if (button_dpress.q == 1){
           button_dpress.d = 0;
           gamestate.d = gamestate.CSHL;
         }
         
+        // change state to INIT if start button is pressed
         if (button_start.q == 1) {
           button_start.d = 0;
+          // Deactivate godmode on end
+          godmode.d = 0;
           gamestate.d = gamestate.INIT;
         }     
         
       // SCORING STATE 
       gamestate.SCORING:                    
         random_position.blueposindex = blueposindex.q;
+        
         // need to update both red and green position
         greenpos.d = random_position.green;
         redpos.d = random_position.red;
