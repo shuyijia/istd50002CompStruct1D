@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="ALUTest" board="Alchitry Au" language="Lucid" version="3">
   <files>
-    <src>random_position.luc</src>
-    <src>adder.luc</src>
-    <src>circular_shift.luc</src>
-    <src top="true">au_top.luc</src>
-    <component>pipeline.luc</component>
-    <src>seven_seg.luc</src>
-    <src>boolean.luc</src>
-    <src>game.luc</src>
     <src>button_debounce.luc</src>
-    <src>check.luc</src>
-    <src>alu.luc</src>
-    <component>pn_gen.luc</component>
-    <src>auto.luc</src>
-    <src>blinker.luc</src>
+    <src>seven_seg.luc</src>
+    <src>random_position.luc</src>
+    <component>pipeline.luc</component>
+    <src top="true">au_top.luc</src>
     <src>shifter.luc</src>
-    <src>manual.luc</src>
     <component>reset_conditioner.luc</component>
-    <component>button_conditioner.luc</component>
     <src>comparator.luc</src>
+    <src>adder.luc</src>
+    <src>alu.luc</src>
+    <src>circular_shift.luc</src>
+    <src>boolean.luc</src>
+    <component>button_conditioner.luc</component>
+    <src>manual.luc</src>
+    <src>game.luc</src>
+    <component>pn_gen.luc</component>
     <constraint lib="true">alchitry.acf</constraint>
-    <constraint lib="true">au.xdc</constraint>
     <constraint>custom.acf</constraint>
+    <constraint lib="true">au.xdc</constraint>
   </files>
 </project>

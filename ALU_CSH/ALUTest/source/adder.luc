@@ -13,30 +13,39 @@ module adder (         // This module is for adding/subtracting
   sig op_sig[16];     // 16bit output signal
 
   always {   
-    case(alufn[1:0]){         // ALUFN 0000xx
-      2b00:                  // ALUFN 000000 (addition)
+    case(alufn[2:0]){         // ALUFN 0000xx
+      3b000:                  // ALUFN 000000 (addition)
         op_sig = $signed(a)+$signed(b);
         op = op_sig;
         z = ~|op_sig;
         v = (((a[15])&(b[15])&(~op_sig[15])) | ((~a[15])&(~b[15])&(op_sig[15])));
         n = op_sig[15];
     
-      2b01:                  // ALUFN 000001 (subtraction)
+      3b001:                  // ALUFN 000001 (subtraction)
         op_sig = $signed(a)-$signed(b);
         op = op_sig;
         z = ~|op_sig;
         v = (((a[15])&(b[15])&(~op_sig[15])) | ((~a[15])&(~b[15])&(op_sig[15])));
         n = op_sig[15];
         
-      2b10: // ALUFN 000010 (multiplication)
+      3b010: // ALUFN 000010 (multiplication)
         op_sig = $signed(a)*$signed(b);
         op = op_sig;
         z = ~|op_sig;
         v = (((a[15])&(b[15])&(~op_sig[15])) | ((~a[15])&(~b[15])&(op_sig[15])));
         n = op_sig[15];
         
-      2b11: //ALUFN 000011 (division)
+      3b011: //ALUFN 000011 (division)
         op_sig = $signed(a)/$signed(b);
+        op = op_sig;
+        z = ~|op_sig;
+        v = (((a[15])&(b[15])&(~op_sig[15])) | ((~a[15])&(~b[15])&(op_sig[15])));
+        n = op_sig[15];
+        
+      3b100: //ALUFN 000100 (modulo)
+        // a = red/green/blue
+        // b = modulo number
+        op_sig = a - ((a / b) * b);
         op = op_sig;
         z = ~|op_sig;
         v = (((a[15])&(b[15])&(~op_sig[15])) | ((~a[15])&(~b[15])&(op_sig[15])));

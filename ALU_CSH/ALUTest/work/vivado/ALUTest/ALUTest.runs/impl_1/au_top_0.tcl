@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.runs/impl_1/au_top_0.tcl"
+  variable script "D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.runs/impl_1/au_top_0.tcl"
   variable category "vivado_impl"
 }
 
@@ -121,24 +121,24 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param chipscope.maxJobs 2
+  set_param chipscope.maxJobs 3
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a35tftg256-1
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.cache/wt [current_project]
-  set_property parent.project_path G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.xpr [current_project]
-  set_property ip_output_repo G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.cache/ip [current_project]
+  set_property webtalk.parent_dir D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.cache/wt [current_project]
+  set_property parent.project_path D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.xpr [current_project]
+  set_property ip_output_repo D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.runs/synth_1/au_top_0.dcp
+  add_files -quiet D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.runs/synth_1/au_top_0.dcp
 OPTRACE "read constraints: implementation" START { }
-  read_xdc G:/ALU_CSH/ALUTest/work/constraint/alchitry.xdc
-  read_xdc {{C:/Program Files/Alchitry/Alchitry Labs/library/components/au.xdc}}
-  read_xdc G:/ALU_CSH/ALUTest/work/constraint/custom.xdc
+  read_xdc D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/constraint/alchitry.xdc
+  read_xdc D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/constraint/custom.xdc
+  read_xdc {{D:/Program Files/library/components/au.xdc}}
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }

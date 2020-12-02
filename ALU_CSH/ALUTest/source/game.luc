@@ -12,10 +12,10 @@ module game (
     .clk(clk){
   
     // define dffs needed
-    dff greenpos[16];
     dff redpos[16];
+    dff greenpos[16];
     dff bluepos[16];
-    dff bluenum[4];
+    dff blueposindex[4];
     dff scoremem[8];
     dff button_dpress;
     dff button_start;
@@ -34,50 +34,51 @@ module game (
     button_conditioner start_condi;
     button_debounce start_debounce;
     
-    fsm gamestate = {INIT, THREE, FOUR, CSHLL, CSHRR, CSHL, CSHR, COLLISION, UPDATEY, UPDATEALL, DONE};
+    fsm gamestate = {INIT, CSHL, CSHR, COLLISION, SCORING, DONE};
 
   }
+  
+  alu alu;
 
   always {
   
+    // initialize alu
+    alu.a = 0;
+    alu.b = 0;
+    alu.alufn = 0;
+    
+    // outputs
     blue = bluepos.q;
     green = greenpos.q;
     red = redpos.q;
     score = scoremem.q;
-    random_position.blue = bluenum.q;
-    random_position.next = 0;    
-    //bluepos.d = random_position.blueout;
-    
-    direction.d = 0;
+    random_position.blueposindex = blueposindex.q;
         
+    // dpress button
     dpress_condi.in = button;
     dpress_debounce.in = dpress_condi.out;
     
-    start_condi.in = start;
-    start_debounce.in = start_condi.out;
-    
-    
-    // ERROR check
-    /*
-    if (greenpos.q[15:0] == 0 || redpos.q[15:0] == 0) {
-      greenpos.d = 16hFFFF;
-    }
-    */
     if (dpress_debounce.out == 1) {
       button_dpress.d = 1;
     }
-    
+        
+    // start button
+    start_condi.in = start;
+    start_debounce.in = start_condi.out;
+   
     if (start_debounce.out == 1) {
       button_start.d = 1;
     }
     
     if (gamestate.q != gamestate.INIT) {
       if (greenpos.q == bluepos.q) {
-        gamestate.d = gamestate.COLLISION;
+        gamestate.d = gamestate.SCORING;  
       }
+      
       if (redpos.q == bluepos.q && godmode.q == 0) {
         gamestate.d = gamestate.INIT;
       }
+      
       // RED GREEN COLLISION
       if (redpos.q == greenpos.q) {
           redpos.d = redpos.q >> 1;
@@ -86,16 +87,16 @@ module game (
       if (redpos.q[15:0] == 16b0) {
         redpos.d = 16h8000;
       }
-      
     }
     
     case(gamestate.q){
-    
-      gamestate.INIT:
-        bluepos.d = 16h0001;
-        bluenum.d = 0;
-        greenpos.d = 16h0100;
-        redpos.d = 16h0010;
+      
+      // INITIAL STATE
+      gamestate.INIT:         
+        redpos.d = 16h0008;
+        greenpos.d = 16h0800;
+        bluepos.d = 16h0080; 
+        blueposindex.d = 7;
         godmode.d = 0;
         
         if (button_dpress.q == 1 && button_start.q == 1) {
@@ -111,27 +112,25 @@ module game (
           button_start.d = 0;
         }     
       
-      gamestate.CSHL:
+      // CIRCULAR SHIFT LEFT
+      gamestate.CSHL:         
         count.d = count.q + 8 + speed.q;
         direction.d = 0;     
         
         if (count.q[29] == 1){
           bluepos.d[15:0] = bluepos.q << 1;
-          bluenum.d = bluenum.q + 1;
+          blueposindex.d = blueposindex.q + 1;
           count.d = 0;
         }
           
         // CSHL BLUE (SPECIAL)
         if (bluepos.q[15:0] == 16b0) {
           bluepos.d = 1;
-          bluenum.d = 0;
+          blueposindex.d = 0;
         }
         
-
-        if
-         (button_dpress.q == 1){
+        if (button_dpress.q == 1){
           button_dpress.d = 0;
-          direction.d = 1;
           gamestate.d = gamestate.CSHR;
         }
         
@@ -139,39 +138,37 @@ module game (
           button_start.d = 0;
           gamestate.d = gamestate.INIT;
         } 
- 
+              
+      // CIRCULAR SHIFT RIGHT
       gamestate.CSHR:
         count.d = count.q + 8 + speed.q;
         direction.d = 1;
 
         if (count.q[29] == 1){
           bluepos.d[15:0] = bluepos.q >> 1;
-          bluenum.d = bluenum.q - 1;
+          blueposindex.d = blueposindex.q - 1;
           count.d = 0;
         }
           
         // CSHR BLUE (SPECIAL)
         if (bluepos.q[15:0] == 16b0) {
           bluepos.d = 16h8000;
-          bluenum.d = 15;
+          blueposindex.d = 15;
         }
-
+        
         if (button_dpress.q == 1){
           button_dpress.d = 0;
-          direction.d = 0;
           gamestate.d = gamestate.CSHL;
-
-        } 
+        }
         
         if (button_start.q == 1) {
           button_start.d = 0;
           gamestate.d = gamestate.INIT;
-        }
+        }     
         
-        
-      gamestate.COLLISION:
-        // random_position.next = 1;
-        random_position.blue = bluenum.q;
+      // SCORING STATE 
+      gamestate.SCORING:                    
+        random_position.blueposindex = blueposindex.q;
         // need to update both red and green position
         greenpos.d = random_position.green;
         redpos.d = random_position.red;
@@ -188,10 +185,9 @@ module game (
           gamestate.d = gamestate.CSHL;
         }
         
-        if (direction.q == 1){
+        if (direction.q == 1) {
           gamestate.d = gamestate.CSHR;
         }
         
-      }
   }
 }

@@ -4,10 +4,9 @@ module au_top (
     output led [8],         // 8 user controllable LEDs
     input button,    
     input start,
-    output red[16],   // LEDs on IO Shield
+    output red[16],         // LEDs on IO Shield
     output blue[16],
     output green[16],
-    //output io_led[3][8],
     output seg[2][8],
     input usb_rx,           // USB->Serial input
     output usb_tx           // USB->Serial output
@@ -22,24 +21,18 @@ module au_top (
     reset_conditioner reset_cond;
     
     .rst(rst) {
-      //blinker myBlinker;    // Blink led[8] if the current state is INIT
-      //manual manual;        // Manual Testing
-      //auto auto;            // Auto Testing
       game game;
-      
     }
     
   }
   
   seven_seg seven_seg0;
   seven_seg seven_seg1;
-  
    
   always { 
     reset_cond.in = ~rst_n;    // input raw inverted reset signal
     rst = reset_cond.out;      // conditioned reset
  
-    //led = 8x{myBlinker.blink}; // blink LEDs
     led = 8h00;
     usb_tx = usb_rx;           // echo the serial data
     
@@ -50,7 +43,7 @@ module au_top (
     blue = game.blue;
     green = game.green;
     
-    //seg = 2x{{8b1111111}};
+    // add alu and put into new module for multi 7seg
     seven_seg0.char = (game.score) - ((game.score) / 10) * 10;
     seven_seg1.char = (game.score)/10;
     seg[0] = seven_seg0.seg;

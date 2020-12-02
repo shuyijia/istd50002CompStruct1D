@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.runs/synth_1/au_top_0.tcl"
+  variable script "D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.runs/synth_1/au_top_0.tcl"
   variable category "vivado_synth"
 }
 
@@ -76,23 +76,28 @@ create_project -in_memory -part xc7a35tftg256-1
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.cache/wt [current_project]
-set_property parent.project_path G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.xpr [current_project]
+set_property webtalk.parent_dir D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.cache/wt [current_project]
+set_property parent.project_path D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/button_conditioner_5.v
-  G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/button_debounce_6.v
-  G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/game_2.v
-  G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/pipeline_8.v
-  G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/pn_gen_7.v
-  G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/random_position_4.v
-  G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/reset_conditioner_1.v
-  G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/seven_seg_3.v
-  G:/ALU_CSH/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/au_top_0.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/adder_10.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/alu_7.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/boolean_12.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/button_conditioner_5.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/button_debounce_6.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/comparator_11.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/game_2.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/pipeline_9.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/pn_gen_8.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/random_position_4.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/reset_conditioner_1.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/seven_seg_3.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/shifter_13.v
+  D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/vivado/ALUTest/ALUTest.srcs/sources_1/imports/verilog/au_top_0.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -103,14 +108,14 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc G:/ALU_CSH/ALUTest/work/constraint/alchitry.xdc
-set_property used_in_implementation false [get_files G:/ALU_CSH/ALUTest/work/constraint/alchitry.xdc]
+read_xdc D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/constraint/alchitry.xdc
+set_property used_in_implementation false [get_files D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/constraint/alchitry.xdc]
 
-read_xdc {{C:/Program Files/Alchitry/Alchitry Labs/library/components/au.xdc}}
-set_property used_in_implementation false [get_files {{C:/Program Files/Alchitry/Alchitry Labs/library/components/au.xdc}}]
+read_xdc D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/constraint/custom.xdc
+set_property used_in_implementation false [get_files D:/Users/arissa/Desktop/50.002/ALU_FINAL_V1/ALUTest/work/constraint/custom.xdc]
 
-read_xdc G:/ALU_CSH/ALUTest/work/constraint/custom.xdc
-set_property used_in_implementation false [get_files G:/ALU_CSH/ALUTest/work/constraint/custom.xdc]
+read_xdc {{D:/Program Files/library/components/au.xdc}}
+set_property used_in_implementation false [get_files {{D:/Program Files/library/components/au.xdc}}]
 
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]

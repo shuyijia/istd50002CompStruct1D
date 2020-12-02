@@ -2,7 +2,6 @@ module circular_shift (
     input clk,  // clock
     input rst,  // reset
     input position[16], //
-    input n[4], // number of bits to shift by
     input dir, // left or right shift, 0 == left, 1 == right
     output out[16]
   ) {

@@ -1,9 +1,7 @@
 module random_position (
     input clk,  // clock
     input rst,  // reset
-    input blue[4],
-    input next,
-    //output blueout[16],
+    input blueposindex[4],
     output red[16],
     output green[16]
   ) {
@@ -11,86 +9,72 @@ module random_position (
   .clk(clk){
   
     // define dffs needed
-    dff seed[32];
     dff redpos[16];
     dff greenpos[16];
     dff rednum[4];
     dff greennum[4];
-    fsm state = {OUTPUT, GEN};    
     
     .rst(rst){
       pn_gen random;
     }
   }  
+  
+  alu alumod0;
+  alu alumod1;
+  alu aluadd0;
+  alu aluadd1;
+  alu aluadd2;
+  alu aluadd3;
 
   always {    
+  
+    // initialize random
     random.seed = 32h0000000F;
     random.next = 1;
+    
+    // reset dff
     greenpos.d = 16b0;
     redpos.d = 16b0;
     
-    greennum.d = random.num[2:0] + 2 + blue;
-    rednum.d = random.num[5:4] + blue + 4; 
+    // randomize red and green positions
     
-    greenpos.d[(greennum.q) - ((greennum.q) / 16) * 16] = 1;
-    redpos.d[(rednum.q) - ((rednum.q) / 16) * 16] = 1;
+    // blueposindex + 2
+    aluadd0.a = blueposindex;
+    aluadd0.b = 2;
+    aluadd0.alufn = 6b0;
     
+    // blueposindex + 4
+    aluadd1.a = blueposindex;
+    aluadd1.b = 4;
+    aluadd1.alufn = 6b0;
+    
+    // random.num[2:0] + blueposindex + 2
+    aluadd2.a = random.num[2:0];
+    aluadd2.b = aluadd0.alu;
+    aluadd2.alufn = 6b0;
+    
+    // random.num[5:3] + blueposindex + 4
+    aluadd3.a = random.num[5:3];
+    aluadd3.b = aluadd1.alu;
+    aluadd3.alufn = 6b0;
+    
+    // set greennum and rednum
+    greennum.d = aluadd2.alu[3:0];
+    rednum.d = aluadd3.alu[3:0];
+    
+    alumod0.a = greennum.q;
+    alumod0.b = 16;
+    alumod0.alufn = 6b100;
+    greenpos.d[alumod0.alu] = 1;
+    
+    alumod1.a = rednum.q;
+    alumod1.b = 16;
+    alumod1.alufn = 6b100;
+    redpos.d[alumod1.alu] = 1;
+    
+    // outputs
     red = redpos.q;
     green = greenpos.q;
-       
-    /*    
-    //forbidden0 = blue * 4 - $pow(2, 16);
-    forbidden0 = (blue * 4) - (((blue * 4) / $pow(2, 16)) * $pow(2, 16));
-    forbidden1 = (blue * 2) - (((blue * 2) / $pow(2, 16)) * $pow(2, 16));
-    forbidden2 = blue;
-    //forbidden3 = (blue * 2 - 1) - ((((blue * 2) - 1) / $pow(2, 16)) * $pow(2, 16));
-    //forbidden4 = (blue * 4 - 1) - ((((blue * 4) - 1) / $pow(2, 16)) * $pow(2, 16));
-    forbidden_area =  forbidden0 | forbidden1 | forbidden2; // | forbidden3 | forbidden4;
-    
-    blueout = forbidden_area;
-
-
-    greennum.d = random.num[3:0];
-    rednum.d = random.num[5:4]; 
-    
-    greenpos.d[(greennum.q) - ((greennum.q) / 16) * 16] = 1;
-    redpos.d[(rednum.q) - ((rednum.q) / 16) * 16] = 1;
-       
-    if (redpos.q == forbidden0 | redpos.q == forbidden1 | redpos.q == forbidden2) {
-      redpos.d = 0;
-      redpos.d = (blue * 8 + 1) - ((((blue * 8) + 1) / $pow(2, 16)) * $pow(2, 16));
-    }
-    
-    if (redpos.q == forbidden3 | redpos.q == forbidden4) {
-      redpos.d = 0;
-      redpos.d = (blue * 8 - 1) - ((((blue * 8) - 1) / $pow(2, 16)) * $pow(2, 16));
-    }
-    green = greenpos.q;
-    red = redpos.q;
-    
-    
-    case(state.q) {
-      state.OUTPUT:
-        green = greenpos.q;
-        red = redpos.q;
-        if (next == 1) {
-          state.d = state.GEN;
-       }
-      state.GEN:
-        redpos.d = 16b0;
-        greenpos.d = 16b0;
-        greennum.d = random.num[3:0];
-        rednum.d = random.num[7:4];
-        greenpos.d[(greennum.q) - ((greennum.q) / 16) * 16] = 1;
-        redpos.d[(rednum.q) - ((rednum.q) / 16) * 16] = 1;
-        if (redpos.q == blue) {
-          redpos.d = redpos.q << 2;
-        }
-        else {
-          state.d = state.OUTPUT;
-        }
-    }
-    */
 
   }
 }
