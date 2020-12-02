@@ -1,0 +1,24 @@
+module button_debounce #(
+    RISE = 1 : RISE == 0 || RISE == 1,
+    FALL = 1 : FALL == 0 || FALL == 1
+  )(
+    input clk,  // clock
+    input in,   // input signal
+    output out  // edge detected
+  ) {
+  
+  // need to save the previous state of 'in'
+  dff last(.clk(clk));
+  
+  always {
+    out = 0; // default to 0
+    
+    last.d = in; // save the input
+            
+    // if looking for rising edges
+    if (RISE)
+      // if there is a rising edge
+      if (in == 1 && last.q == 0)
+        out = 1; // set the input
+  }
+}
