@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Dpress" board="Alchitry Au" language="Lucid" version="3">
+  <files>
+    <src>alu.luc</src>
+    <src>game.luc</src>
+    <src>boolean.luc</src>
+    <src>button_debounce.luc</src>
+    <src>adder.luc</src>
+    <component>pipeline.luc</component>
+    <src>seven_seg.luc</src>
+    <src top="true">au_top.luc</src>
+    <src>random_position.luc</src>
+    <src>manual.luc</src>
+    <src>circular_shift.luc</src>
+    <src>shifter.luc</src>
+    <component>pn_gen.luc</component>
+    <src>comparator.luc</src>
+    <component>reset_conditioner.luc</component>
+    <src>multi_seven_seg.luc</src>
+    <component>button_conditioner.luc</component>
+    <constraint lib="true">alchitry.acf</constraint>
+    <constraint lib="true">au.xdc</constraint>
+    <constraint>custom.acf</constraint>
+  </files>
+</project>
