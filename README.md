@@ -1,4 +1,4 @@
-# 50.002 Computation Structures 1D
+# 50.002 Computation Structures 1D (2020 Fall)
 
 Group Members:
 - [Cheng Wee Hoe](https://github.com/chengwee)
@@ -31,4 +31,4 @@ Whenever the blue pixel meets a green pixel, the player gains a point reflected 
 
 The speed of the blue pixel would also increase as the player earns a point. 
 
-The game ends immediately when the blue pixel and the red pixel collide.  
+The game ends immediately when the blue pixel and the red pixel collide.
